@@ -4,7 +4,6 @@ import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
 
 import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
-import { CreateUserDto } from '../dto/user/create-user.dto';
 
 
 
@@ -16,17 +15,13 @@ export class UsersController {
     // sign up
     @Post()
     async addUser(
-        @Body() createUserDto:CreateUserDto
-        // @Body('password') userPassword: string,
-        // @Body('username') userName: string,
+        @Body('password') userPassword: string,
+        @Body('username') userName: string,
     ){
-        const {username, password} = createUserDto;
         const saltOrRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-        // const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
+        const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
         const result = await this.usersService.insertUser(
-            // userName,
-            username,
+            userName,
             hashedPassword,
         );
         return {

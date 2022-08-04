@@ -17,13 +17,10 @@ export class UsersController {
     @Post()
     async addUser(
         @Body() createUserDto:CreateUserDto
-        // @Body('password') userPassword: string,
-        // @Body('username') userName: string,
     ){
         const {username, password} = createUserDto;
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-        // const hashedPassword = await bcrypt.hash(userPassword, saltOrRounds);
         const result = await this.usersService.insertUser(
             // userName,
             username,

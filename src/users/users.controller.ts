@@ -14,12 +14,12 @@ export class UsersController {
     
 
     // sign up
-    @Post()
+    @Post('create-new-user')
     async addUser(
         @Body() createUserDto:CreateUserDto
     ){
         const {username, password} = createUserDto;
-        const saltOrRounds = 10;
+        const saltOrRounds = 10;  // nen config qua env
         const hashedPassword = await bcrypt.hash(password, saltOrRounds);
         const result = await this.usersService.insertUser(
             // userName,
